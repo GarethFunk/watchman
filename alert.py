@@ -2,7 +2,9 @@
 
 import smtplib
 from email.message import EmailMessage
-from credentials import smtp_username, smtp_password, smtp_from
+from googlevoice import Voice
+from credentials import smtp_username, smtp_password, smtp_from, \
+                        gvoice_username, gvoice_password
 
 """
 Gareth Funk 2019
@@ -14,10 +16,13 @@ class Alert:
         self.__smtp_server.ehlo()
         self.__smtp_server.starttls()
         self.__smtp_server.login(smtp_username, smtp_password)
+        self.__gvoice = Voice()
+        #self.__gvoice.login(gvoice_username, gvoice_password)
         return
 
     def __del__(self):
         self.__smtp_server.quit()
+        self.__gvoice.logout()
         return
 
     def Email(self, email):
@@ -27,6 +32,10 @@ class Alert:
         msg["From"] = smtp_from
         msg["To"] = email
         self.__smtp_server.send_message(msg)
+        return
+
+    def Sms(self, number):
+        self.__gvoice.send_sms(number, "SMS test")
         return
 
 if __name__ == "__main__":
