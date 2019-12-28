@@ -1,10 +1,10 @@
 # Google Voice API and dependencies
-googlevoice==2.0.5
 six==1.13.0
 requests==2.22.0
+googlevoice==2.0.5
 # SciPy and dependencies
-scipy==1.4.1
 numpy==1.18.0
+scipy==1.4.1
 # Sounddevice and dependencies
-sounddevice==0.3.14
 cffi==1.13.2
+sounddevice==0.3.14
