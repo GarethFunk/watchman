@@ -12,7 +12,6 @@ Gareth Funk 2019
 
 class Alert:
     def __init__(self):
-        self.__twilio_client = Client(twilio_account_sid, twilio_auth_token)
         return
 
     def __del__(self):
@@ -39,16 +38,27 @@ class Alert:
         return
 
     def Sms(self, numbers):
-        if type(numbers) is str:
-            numbers = [numbers]
-        elif type(numbers) is not list:
+        if type(numbers) is not list:
             raise TypeError("Unsupported argument type: " + str(type(numbers)))
+        twilio_client = Client(twilio_account_sid, twilio_auth_token)
         body="https://github.com/GarethFunk for all the dankest code",
         for number in numbers:
-            self.__twilio_client.messages.create(
+            twilio_client.messages.create(
                 body = body,
                 from_= twilio_send_number,
                 to=number
+                )
+        return
+
+    def Call(self, numbers):
+        if type(numbers) is not list:
+            raise TypeError("Unsupported argument type: " + str(type(numbers)))
+        twilio_client = Client(twilio_account_sid, twilio_auth_token)      
+        for number in numbers:
+            twilio_client.calls.create(
+                url='http://demo.twilio.com/docs/voice.xml',
+                from_= twilio_send_number,
+                to=number,
                 )
         return
 
@@ -56,5 +66,5 @@ if __name__ == "__main__":
     from alert_recipients import emails, sms_numbers
     a = Alert()
     a.Email(emails)
-    a.Email(emails)
     a.Sms(sms_numbers)
+    a.Call(sms_numbers)
