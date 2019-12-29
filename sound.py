@@ -11,7 +11,7 @@ class Sound:
         self.__default_recording_time = default_recording_time
         sd.default.samplerate = self.__samplerate
         sd.default.channels = 1
-        self.__sos_filter = signal.butter(10, [3400, 3500], btype="bandpass", output="sos", fs=self.__samplerate)
+        self.__sos_filter = signal.butter(10, [3400/self.__samplerate, 3500/self.__samplerate], btype="bandpass", output="sos")
         return
 
     def StartRecording(self, seconds=None):
