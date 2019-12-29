@@ -1,7 +1,9 @@
-# Google Voice API and dependencies
+# Twilio and dependencies
+twilio==6.35.1
+PyJWT==1.7.1
+pytz==2019.3
 six==1.13.0
 requests==2.22.0
-googlevoice==2.0.5
 # SciPy and dependencies
 numpy==1.18.0
 scipy==1.4.1

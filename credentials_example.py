@@ -3,5 +3,6 @@
 smtp_username = "user"
 smtp_password = "pass"
 smtp_from = "a@b.com"
-gvoice_username = "user2"
-gvoice_password = "pass2"
+twilio_account_sid = "user2"
+twilio_auth_token = "pass2"
+twilio_send_number "+12345678901"

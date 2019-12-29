@@ -2,9 +2,9 @@
 
 import smtplib
 from email.message import EmailMessage
-from googlevoice import Voice
+from twilio.rest import Client
 from credentials import smtp_username, smtp_password, smtp_from, \
-                        gvoice_username, gvoice_password
+                        twilio_account_sid, twilio_auth_token, twilio_send_number
 
 """
 Gareth Funk 2019
@@ -12,12 +12,10 @@ Gareth Funk 2019
 
 class Alert:
     def __init__(self):
-        self.__gvoice = Voice()
-        #self.__gvoice.login(gvoice_username, gvoice_password)
+        self.__twilio_client = Client(twilio_account_sid, twilio_auth_token)
         return
 
     def __del__(self):
-        #self.__gvoice.logout()
         return
 
     def Email(self, emails):
@@ -40,12 +38,23 @@ class Alert:
         smtp_server.quit()
         return
 
-    def Sms(self, number):
-        self.__gvoice.send_sms(number, "SMS test")
+    def Sms(self, numbers):
+        if type(numbers) is str:
+            numbers = [numbers]
+        elif type(numbers) is not list:
+            raise TypeError("Unsupported argument type: " + str(type(numbers)))
+        body="https://github.com/GarethFunk for all the dankest code",
+        for number in numbers:
+            self.__twilio_client.messages.create(
+                body = body,
+                from_= twilio_send_number,
+                to=number
+                )
         return
 
 if __name__ == "__main__":
-    addr = smtp_from
+    from alert_recipients import emails, sms_numbers
     a = Alert()
-    a.Email(addr)
-    a.Email(addr)
+    a.Email(emails)
+    a.Email(emails)
+    a.Sms(sms_numbers)
